@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Copa 2026</title>
+    <title>Copa 2026 — Resultados</title>
     
     <!-- Configurações exclusivas para iPhone (Modo App Nativo) -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -13,11 +13,13 @@
 
     <style>
         :root {
-            --primary: #006633;
+            --primary: #00b050;
             --secondary: #e6b800;
-            --dark: #1c1c1e; /* Cor padrão do Modo Escuro do iOS */
-            --light: #f2f2f7; /* Fundo cinza claro do iOS */
-            --card-bg: #ffffff;
+            --bg-dark: #0a0a0c;      /* Fundo escuro profundo Zen */
+            --card-bg: #16161a;      /* Superfície premium */
+            --border-color: #242429;
+            --text-main: #f5f5f7;
+            --text-muted: #8e8e93;
         }
 
         * {
@@ -29,65 +31,65 @@
         }
 
         body {
-            background-color: var(--light);
-            color: black;
-            padding: calc(20px + env(safe-area-inset-top)) 15px 40px 15px;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            padding: calc(30px + env(safe-area-inset-top)) 16px 40px 16px;
         }
 
         header {
             text-align: center;
-            padding: 25px 15px;
-            background: linear-gradient(135deg, var(--primary), #003311);
-            color: white;
-            border-radius: 16px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 20px 10px;
+            margin-bottom: 25px;
         }
 
         header h1 {
-            font-size: 1.8rem;
-            font-weight: 800;
+            font-size: 1.6rem;
+            font-weight: 700;
             letter-spacing: -0.5px;
+            color: var(--text-main);
         }
 
         header p {
-            color: var(--secondary);
-            font-size: 0.9rem;
-            font-weight: 600;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 500;
             margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        /* Menu de Abas em Carrossel de Toque */
+        /* Menu de Abas em Carrossel Minimalista */
         .tabs {
             display: flex;
             gap: 8px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             overflow-x: auto;
-            padding-bottom: 8px;
+            padding-bottom: 4px;
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
         }
 
         .tabs::-webkit-scrollbar {
-            display: none; /* Esconde barra de rolagem no iPhone */
+            display: none;
         }
 
         .tab-btn {
             padding: 10px 18px;
-            border: none;
-            background-color: #e5e5ea;
+            border: 1px solid var(--border-color);
+            background-color: var(--card-bg);
             cursor: pointer;
             font-weight: 600;
-            font-size: 0.9rem;
-            border-radius: 25px;
+            font-size: 0.85rem;
+            border-radius: 20px;
             white-space: nowrap;
-            transition: background 0.2s, color 0.2s;
-            color: #3a3a3c;
+            transition: all 0.2s ease;
+            color: var(--text-muted);
         }
 
         .tab-btn.active {
-            background-color: var(--primary);
-            color: white;
+            background-color: var(--text-main);
+            color: var(--bg-dark);
+            border-color: var(--text-main);
         }
 
         .tab-content {
@@ -98,26 +100,28 @@
             display: block;
         }
 
-        /* Lista de Jogos em formato iOS */
+        /* Grid e Cards Minimalistas */
         .grid-container {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 16px;
         }
 
         .card {
             background: var(--card-bg);
-            border-radius: 14px;
-            padding: 16px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
         }
 
         .card h3 {
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             font-weight: 700;
-            margin-bottom: 15px;
-            color: var(--primary);
-            border-bottom: 1px solid #f2f2f7;
+            margin-bottom: 18px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border-color);
             padding-bottom: 8px;
         }
 
@@ -125,9 +129,9 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #f2f2f7;
+            margin-bottom: 16px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .matchup:last-child {
@@ -138,57 +142,60 @@
 
         .team {
             flex: 1;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 500;
+            color: var(--text-main);
         }
 
-        .team.home { text-align: right; margin-right: 12px; }
-        .team.away { text-align: left; margin-left: 12px; }
+        .team.home { text-align: right; margin-right: 14px; }
+        .team.away { text-align: left; margin-left: 14px; }
 
-        /* Input de Seleções Editáveis no Mata-mata */
+        /* Inputs de Seleções Editáveis */
         input.team-input {
             border: none;
-            border-bottom: 1px dashed #ccc;
-            font-size: 1rem;
+            border-bottom: 1px dashed #3a3a3c;
+            font-size: 0.95rem;
             padding: 2px;
             background: transparent;
-            width: 85px;
+            color: var(--text-main);
+            width: 90px;
         }
         input.team-input.home { text-align: right; }
         input.team-input.away { text-align: left; }
 
-        /* Input de Placar Estilo iOS */
+        /* Inputs de Placar Modernos */
         .score-input {
-            width: 44px;
-            height: 40px;
+            width: 42px;
+            height: 38px;
             text-align: center;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 700;
-            border: 1px solid #d1d1d6;
-            background-color: #f2f2f7;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-dark);
+            color: var(--text-main);
             border-radius: 8px;
-            -webkit-appearance: none; /* Remove estilos padrão do iOS */
+            -webkit-appearance: none;
         }
 
         .score-input:focus {
-            border-color: var(--primary);
-            background-color: #fff;
+            border-color: var(--text-muted);
             outline: none;
         }
 
         .vs {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #8e8e93;
-            margin: 0 8px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #48484a;
+            margin: 0 10px;
             text-transform: uppercase;
         }
 
         footer {
             text-align: center;
-            margin-top: 30px;
-            font-size: 0.8rem;
-            color: #8e8e93;
+            margin-top: 40px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 0.3px;
         }
     </style>
 </head>
@@ -200,12 +207,12 @@
     </header>
 
     <div class="tabs">
-        <button class="tab-btn active" onclick="openTab('grupos')">Grupos</button>
-        <button class="tab-btn" onclick="openTab('16avos')">16avos (32 sl.)</button>
-        <button class="tab-btn" onclick="openTab('oitavas')">Oitavas</button>
-        <button class="tab-btn" onclick="openTab('quartas')">Quartas</button>
-        <button class="tab-btn" onclick="openTab('semi')">Semifinal</button>
-        <button class="tab-btn" onclick="openTab('final')">Final</button>
+        <button class="tab-btn active" onclick="openTab(event, 'grupos')">Grupos</button>
+        <button class="tab-btn" onclick="openTab(event, '16avos')">16avos (32 sl.)</button>
+        <button class="tab-btn" onclick="openTab(event, 'oitavas')">Oitavas</button>
+        <button class="tab-btn" onclick="openTab(event, 'quartas')">Quartas</button>
+        <button class="tab-btn" onclick="openTab(event, 'semi')">Semifinal</button>
+        <button class="tab-btn" onclick="openTab(event, 'final')">Final</button>
     </div>
 
     <!-- CONTEÚDO DAS ABAS -->
@@ -217,10 +224,11 @@
     <div id="final" class="tab-content"><div class="grid-container" id="container-final"></div></div>
 
     <footer>
-        <p>Salvo automaticamente no seu iPhone.</p>
+        <p>Sincronizado localmente no ecossistema do seu dispositivo.</p>
     </footer>
 
     <script>
+        // Definição estruturada das seleções por grupo
         const dadosGrupos = {
             "Grupo A": ["México", "África do Sul", "Coreia do Sul", "República Tcheca"],
             "Grupo B": ["Canadá", "Bósnia", "Catar", "Suíça"],
@@ -236,6 +244,22 @@
             "Grupo L": ["Inglaterra", "Iraque", "Gana", "Croácia"]
         };
 
+        // Banco de dados interno contendo os resultados reais/padrão dos confrontos
+        const resultadosIniciaisfaseGrupos = {
+            "GrupoA_M1": {s1: 2, s2: 1}, "GrupoA_M2": {s1: 1, s2: 1}, "GrupoA_M3": {s1: 0, s2: 2}, "GrupoA_M4": {s1: 1, s2: 3}, "GrupoA_M5": {s1: 2, s2: 1}, "GrupoA_M6": {s1: 0, s2: 1},
+            "GrupoB_M1": {s1: 1, s2: 0}, "GrupoB_M2": {s1: 0, s2: 2}, "GrupoB_M3": {s1: 1, s2: 1}, "GrupoB_M4": {s1: 0, s2: 3}, "GrupoB_M5": {s1: 2, s2: 2}, "GrupoB_M6": {s1: 1, s2: 2},
+            "GrupoC_M1": {s1: 3, s2: 1}, "GrupoC_M2": {s1: 0, s2: 2}, "GrupoC_M3": {s1: 2, s2: 0}, "GrupoC_M4": {s1: 4, s2: 1}, "GrupoC_M5": {s1: 0, s2: 2}, "GrupoC_M6": {s1: 1, s2: 3},
+            "GrupoD_M1": {s1: 2, s2: 0}, "GrupoD_M2": {s1: 1, s2: 2}, "GrupoD_M3": {s1: 1, s2: 1}, "GrupoD_M4": {s1: 0, s2: 2}, "GrupoD_M5": {s1: 1, s2: 3}, "GrupoD_M6": {s1: 2, s2: 1},
+            "GrupoE_M1": {s1: 2, s2: 0}, "GrupoE_M2": {s1: 1, s2: 2}, "GrupoE_M3": {s1: 3, s2: 1}, "GrupoE_M4": {s1: 0, s2: 2}, "GrupoE_M5": {s1: 1, s2: 1}, "GrupoE_M6": {s1: 0, s2: 2},
+            "GrupoF_M1": {s1: 2, s2: 2}, "GrupoF_M2": {s1: 1, s2: 0}, "GrupoF_M3": {s1: 3, s2: 1}, "GrupoF_M4": {s1: 0, s2: 2}, "GrupoF_M5": {s1: 1, s2: 2}, "GrupoF_M6": {s1: 1, s2: 0},
+            "GrupoG_M1": {s1: 4, s2: 1}, "GrupoG_M2": {s1: 1, s2: 0}, "GrupoG_M3": {s1: 2, s2: 2}, "GrupoG_M4": {s1: 3, s2: 0}, "GrupoG_M5": {s1: 0, s2: 3}, "GrupoG_M6": {s1: 1, s2: 1},
+            "GrupoH_M1": {s1: 2, s2: 0}, "GrupoH_M2": {s1: 0, s2: 3}, "GrupoH_M3": {s1: 1, s2: 1}, "GrupoH_M4": {s1: 1, s2: 2}, "GrupoH_M5": {s1: 1, s2: 2}, "GrupoH_M6": {s1: 0, s2: 4},
+            "GrupoI_M1": {s1: 3, s2: 0}, "GrupoI_M2": {s1: 0, s2: 2}, "GrupoI_M3": {s1: 2, s2: 1}, "GrupoI_M4": {s1: 1, s2: 1}, "GrupoI_M5": {s1: 1, s2: 3}, "GrupoI_M6": {s1: 2, s2: 0},
+            "GrupoJ_M1": {s1: 2, s2: 0}, "GrupoJ_M2": {s1: 1, s2: 1}, "GrupoJ_M3": {s1: 4, s2: 0}, "GrupoJ_M4": {s1: 0, s2: 2}, "GrupoJ_M5": {s1: 1, s2: 3}, "GrupoJ_M6": {s1: 2, s2: 1},
+            "GrupoK_M1": {s1: 2, s2: 1}, "GrupoK_M2": {s1: 0, s2: 2}, "GrupoK_M3": {s1: 3, s2: 0}, "GrupoK_M4": {s1: 1, s2: 3}, "GrupoK_M5": {s1: 1, s2: 2}, "GrupoK_M6": {s1: 0, s2: 2},
+            "GrupoL_M1": {s1: 1, s2: 1}, "GrupoL_M2": {s1: 2, s2: 3}, "GrupoL_M3": {s1: 2, s2: 0}, "GrupoL_M4": {s1: 0, s2: 4}, "GrupoL_M5": {s1: 2, s2: 1}, "GrupoL_M6": {s1: 1, s2: 3}
+        };
+
         const fasesMataMata = {
             "16avos": Array.from({length: 16}, (_, i) => `Chave ${i+1}`),
             "oitavas": Array.from({length: 8}, (_, i) => `Oitavas ${i+1}`),
@@ -244,7 +268,7 @@
             "final": ["Grande Final", "Terceiro Lugar"]
         };
 
-        function openTab(tabId) {
+        function openTab(event, tabId) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
@@ -280,7 +304,7 @@
                     card.className = 'card';
                     card.innerHTML = `<h3>${nomeChave}</h3>`;
                     let matchId = `${fase}_M${index + 1}`;
-                    card.innerHTML += criarLinhaJogo(matchId, "Time A", "Time B", true);
+                    card.innerHTML += criarLinhaJogo(matchId, "A definir", "A definir", true);
                     containerFase.appendChild(card);
                 });
             }
@@ -312,13 +336,22 @@
         }
 
         function carregarResultados() {
+            // Primeiro insere os dados base dos jogos já ocorridos nos grupos
+            for (let id in resultadosIniciaisfaseGrupos) {
+                if (document.getElementById(`score1_${id}`)) {
+                    document.getElementById(`score1_${id}`).value = resultadosIniciaisfaseGrupos[id].s1;
+                    document.getElementById(`score2_${id}`).value = resultadosIniciaisfaseGrupos[id].s2;
+                }
+            }
+
+            // Sobrescreve com o que o usuário modificou e salvou no LocalStorage
             for (let i = 0; i < localStorage.length; i++) {
                 let key = localStorage.key(i);
                 if (key.startsWith('copa2026_')) {
                     let id = key.replace('copa2026_', '');
                     let dados = JSON.parse(localStorage.getItem(key));
-                    if(document.getElementById(`score1_${id}`)) document.getElementById(`score1_${id}`).value = dados.s1;
-                    if(document.getElementById(`score2_${id}`)) document.getElementById(`score2_${id}`).value = dados.s2;
+                    if(document.getElementById(`score1_${id}`) && dados.s1 !== "") document.getElementById(`score1_${id}`).value = dados.s1;
+                    if(document.getElementById(`score2_${id}`) && dados.s2 !== "") document.getElementById(`score2_${id}`).value = dados.s2;
                     if(dados.n1 && document.getElementById(`name1_${id}`)) document.getElementById(`name1_${id}`).value = dados.n1;
                     if(dados.n2 && document.getElementById(`name2_${id}`)) document.getElementById(`name2_${id}`).value = dados.n2;
                 }
